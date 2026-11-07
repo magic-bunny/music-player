@@ -1,0 +1,1238 @@
+/* The enclosure, cable and remote share the skin's fixed coordinate system. */
+#walkman-chassis,
+#walkman-remote-chrome,
+#walkman-lcd-status,
+#walkman-lcd-media,
+#walkman-lcd-volume {
+  display: none;
+}
+.brand-tag.walkman-tag {
+  top: 272px;
+  padding: 0;
+}
+.brand-tag.custom-tag {
+  top: 376px;
+}
+.wm-mark {
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 22px;
+  font-family: Arial, sans-serif;
+}
+.skin-ipod .brand-tag.walkman-tag {
+  top: 402px;
+}
+.mobile-landscape .brand-tag.walkman-tag {
+  top: 272px;
+}
+html.walkman-viewport {
+  display: block !important;
+  padding: 0 !important;
+  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden;
+}
+body.skin-walkman:not(.compact-mode) {
+  position: fixed;
+  left: var(--mobile-x);
+  top: var(--mobile-y);
+  right: auto;
+  bottom: auto;
+  width: var(--mobile-width, 1240px);
+  height: var(--mobile-height, 650px);
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  overflow: visible;
+  transform-origin: center;
+  transform: translate(-50%, -50%) rotate(var(--mobile-angle, 0deg))
+    scale(var(--mobile-scale, 1));
+  --green: #344b2e;
+  --lcd-ink: #344b2e;
+  --hardware: 360px;
+  --dial-size: 360px;
+  --dial-right: 0px;
+  color: var(--lcd-ink);
+}
+.skin-walkman:not(.compact-mode)::before,
+.skin-walkman:not(.compact-mode)::after {
+  display: none;
+}
+.skin-walkman:not(.compact-mode) #walkman-chassis {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.wm-cables {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke-linecap: round;
+  pointer-events: none;
+  overflow: visible;
+}
+.wm-wire-shadow {
+  stroke: #000;
+  stroke-width: 16;
+  filter: drop-shadow(0 4px 4px #0009);
+}
+.wm-wire {
+  stroke: #222b30;
+  stroke-width: 11;
+}
+.wm-wire-glint {
+  stroke: #6a777c;
+  stroke-width: 2;
+  opacity: 0.6;
+}
+.wm-deck {
+  position: absolute;
+  left: 80px;
+  top: 110px;
+  width: 750px;
+  height: 450px;
+  border-radius: 10px;
+  border: 2px solid #142a3b;
+  background:
+    linear-gradient(115deg, #ffffff0d, transparent 48%, #0002),
+    repeating-linear-gradient(0deg, #ffffff03 0 1px, #00000004 1px 2px),
+    linear-gradient(100deg, #1c3b54, #2f526d 36%, #294c66 75%, #203d55);
+  box-shadow:
+    inset 3px 0 3px #91a7b54d,
+    inset -4px 0 4px #112c40,
+    inset 0 -5px 4px #0c2234,
+    0 2px 0 2px #0a141d,
+    0 13px 22px #0009;
+}
+.wm-deck::before {
+  content: "";
+  position: absolute;
+  inset: 73px 9px 11px;
+  border: 1px solid #15334b;
+  border-radius: 3px;
+  box-shadow:
+    0 1px #829aa733,
+    inset 0 1px #7695ab1f;
+  pointer-events: none;
+}
+.wm-top-rail {
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: -2px;
+  height: 78px;
+  z-index: 1;
+  border-radius: 9px 9px 0 0;
+  background:
+    linear-gradient(
+      105deg,
+      transparent 18%,
+      #ffffff55 18.2%,
+      #ffffff20 31%,
+      transparent 31.2%,
+      transparent 70%,
+      #ffffff30 89%,
+      transparent
+    ),
+    repeating-linear-gradient(0deg, #ffffff08 0 1px, #00000006 1px 2px),
+    linear-gradient(
+      180deg,
+      #eef2f6,
+      #9da7b1 4%,
+      #dce2e8 9%,
+      #b4bec8 46%,
+      #d4dce3 82%,
+      #8c98a3 96%,
+      #e8eff4
+    );
+  border: 1px solid #b9c5cf;
+  box-shadow:
+    inset 0 2px 1px #fff,
+    inset 1px 0 1px #ffffff80,
+    inset 0 -2px #5c6b78,
+    0 2px 1px #122d40;
+}
+.wm-rail-pin {
+  position: absolute;
+  left: 465px;
+  top: 31px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 55% 65%,
+    #c9d2da 35%,
+    #a2afba 60%,
+    #687886 72%,
+    #e1e8ef 82%,
+    #adbcc7
+  );
+  box-shadow:
+    inset 0 2px 3px #4e656455,
+    0 1px #fff3;
+}
+.wm-jack {
+  position: absolute;
+  left: 697px;
+  top: -34px;
+  width: 46px;
+  height: 48px;
+  z-index: 0;
+  border-radius: 7px 7px 4px 4px;
+  background:
+    linear-gradient(90deg, #0004, #ffffff0c 30%, transparent 75%, #0005),
+    repeating-linear-gradient(0deg, #17252b 0 4px, #35434a 4px 5px);
+  border: 1px solid #1a272d;
+  box-shadow: inset 2px 0 2px #607074;
+}
+.wm-jack::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: -7px;
+  height: 20px;
+  background: linear-gradient(
+    90deg,
+    #647585,
+    #e2e9ee 35%,
+    #aebdc8 65%,
+    #586a78
+  );
+  border: 1px solid #617383;
+  border-radius: 1px;
+}
+.wm-door-seam {
+  position: absolute;
+  left: 132px;
+  top: 78px;
+  bottom: 9px;
+  border-left: 2px solid #122a3c;
+  border-right: 1px solid #627f924d;
+}
+.wm-sony,
+.wm-wordmark {
+  position: absolute;
+  display: block;
+  text-align: center;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  color: transparent;
+  background: linear-gradient(
+    180deg,
+    #f2f6f5 0%,
+    #aebcc3 25%,
+    #fafdfc 43%,
+    #96a7b0 51%,
+    #d1dbdf 77%,
+    #758c9b 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(-1px -1px 0 #e3edf0a0) drop-shadow(1px 1px 0 #476276)
+    drop-shadow(2px 2px 1px #071c2dbf);
+  pointer-events: none;
+}
+.wm-sony {
+  left: 176px;
+  top: 297px;
+  width: 198px;
+  font:
+    700 45px/1 Georgia,
+    "Times New Roman",
+    serif;
+  letter-spacing: 2px;
+}
+.wm-wordmark {
+  left: 687px;
+  top: 297px;
+  width: 255px;
+  font:
+    800 34px/1 "Arial Rounded MT Bold",
+    Arial,
+    sans-serif;
+  letter-spacing: 1px;
+}
+.wm-direction {
+  position: absolute;
+  left: 361px;
+  top: 184px;
+  width: 93px;
+  height: 36px;
+  stroke: #b6c5cb;
+  stroke-width: 2.3;
+  fill: transparent;
+  filter: drop-shadow(1px 2px 1px #071c2d);
+  opacity: 0.8;
+}
+.wm-deck button {
+  pointer-events: auto;
+  position: absolute;
+  padding: 0;
+  transition:
+    filter 0.15s,
+    transform 0.12s;
+  cursor: pointer;
+}
+.wm-silver-key {
+  left: 82px;
+  top: -24px;
+  width: 140px;
+  height: 24px;
+  border: 1px solid #879898;
+  border-radius: 2px 2px 0 0;
+  background: linear-gradient(
+    #f5f7f0,
+    #a0b0b0 16%,
+    #e2e7df 25%,
+    #a7b6b6 78%,
+    #758989
+  );
+  box-shadow:
+    inset 0 1px #fff,
+    0 3px 1px #172d39;
+  z-index: -1;
+}
+.wm-silver-key:active,
+.wm-silver-key[aria-pressed="true"] {
+  transform: translateY(4px);
+}
+.wm-deck button:hover {
+  filter: brightness(1.13);
+}
+.wm-cassette-window {
+  position: absolute;
+  left: 250px;
+  top: 234px;
+  width: 366px;
+  height: 135px;
+  border-radius: 6px;
+  background: linear-gradient(155deg, #111c20, #070e12 65%, #101b20);
+  border: 5px solid #0a1822;
+  box-shadow:
+    0 0 0 1px #71848c,
+    0 2px 1px 2px #0e2b40,
+    inset 0 5px 13px #000;
+  overflow: hidden;
+  z-index: 4;
+}
+.wm-cassette-window::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid #a9bcc31c;
+  background: linear-gradient(
+    120deg,
+    #ffffff0d,
+    transparent 36%,
+    #ffffff0a 36.4%,
+    transparent 80%
+  );
+  box-shadow: inset 0 2px 10px #0009;
+  pointer-events: none;
+  z-index: 4;
+}
+.wm-empty-bay {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 25px #000;
+}
+.wm-empty-bay i {
+  position: absolute;
+  top: 52px;
+  left: 43px;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    #293238 18%,
+    #080e11 22%,
+    #1b272d 52%,
+    #10191f 57%,
+    #25343c 61%,
+    #090e12 72%
+  );
+  opacity: 0.55;
+}
+.wm-empty-bay i + i {
+  left: auto;
+  right: 43px;
+}
+.wm-cassette {
+  position: absolute;
+  left: -75px;
+  top: -90px;
+  width: calc(100% + 150px);
+  height: calc(100% + 180px);
+  background: linear-gradient(#a3aba2, #626e66 45%, #89958d);
+  border-radius: 12px;
+  overflow: hidden;
+}
+#walkman-tape-cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  filter: saturate(0.8) brightness(0.73);
+  transition: opacity 0.2s;
+}
+#walkman-tape-cover.ready {
+  opacity: 1;
+}
+.wm-label-ridge {
+  position: absolute;
+  inset: 10px;
+  border: 1px solid #d2d9cd55;
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 2px #29302a66;
+  pointer-events: none;
+}
+.wm-spool {
+  display: none;
+  position: absolute;
+  top: 34px;
+  width: 57px;
+  height: 57px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    #171b1b 57%,
+    #0d1518 58%,
+    #222a2a 74%,
+    #070d11 78%
+  );
+  border: 1px solid #89938344;
+  box-shadow:
+    inset 0 0 0 4px #080d11,
+    0 1px 2px #0009;
+  z-index: 2;
+}
+.wm-spool-left {
+  left: 25px;
+}
+.wm-spool-right {
+  right: 25px;
+}
+.walkman-loaded .wm-spool {
+  display: block;
+}
+.wm-reel {
+  position: absolute;
+  inset: 10px;
+  border: 3px solid #6f796c;
+  border-radius: 50%;
+  background: repeating-conic-gradient(#8e9987 0 12deg, #121d1c 12deg 60deg);
+  box-shadow:
+    0 0 0 1px #0a1011,
+    inset 0 0 0 2px #28382d;
+  animation: wm-reel-turn 3.8s linear infinite;
+  animation-play-state: paused;
+}
+.wm-reel::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  background: #0b1515;
+  border: 2px solid #62755e;
+  border-radius: 50%;
+}
+.wm-spool-right .wm-reel {
+  animation-duration: 3.1s;
+}
+.playback-active.skin-walkman.walkman-loaded:not(.walkman-live) .wm-reel {
+  animation-play-state: running;
+}
+@keyframes wm-reel-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.skin-walkman .brand-tag {
+  left: 50px;
+  top: 119px;
+  width: 30px;
+  height: 100px;
+  z-index: 0;
+}
+.skin-walkman .brand-tag.ipod-tag {
+  top: 223px;
+}
+.skin-walkman .brand-tag.walkman-tag {
+  top: 327px;
+  background: linear-gradient(90deg, #607b8b, #173e57);
+}
+.skin-walkman .brand-tag.custom-tag {
+  top: 431px;
+}
+.skin-walkman .brand-title {
+  font-size: 12px;
+}
+.skin-walkman:not(.compact-mode) .hardware {
+  left: 810px;
+  top: 180px;
+  right: auto;
+  bottom: auto;
+  width: 360px;
+  height: 360px;
+  aspect-ratio: 1 / 1;
+  z-index: 4;
+}
+.skin-walkman .dial-window {
+  inset: 0;
+  width: 360px;
+  height: 360px;
+  aspect-ratio: 1 / 1;
+  overflow: visible;
+}
+.skin-walkman .dial-window::before {
+  display: none;
+}
+.skin-walkman #dial {
+  inset: 0;
+  width: 360px;
+  height: 360px;
+  aspect-ratio: 1 / 1;
+  border: 1px solid #dce4e4;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 35% 24%,
+    #f1f5f0,
+    #b5c1bd 58%,
+    #9caaa8 82%,
+    #e5ebe3 94%,
+    #768985 99%
+  );
+  box-shadow:
+    inset 0 2px 3px #fff,
+    inset 0 -5px 4px #687c79,
+    0 4px 0 #738781,
+    0 7px 0 #293d3a,
+    0 16px 20px #0009;
+  cursor: grab;
+}
+.skin-walkman #dial::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from -2deg,
+    #314b40 0deg 1.8deg,
+    transparent 1.8deg 5deg
+  );
+  -webkit-mask: radial-gradient(circle, transparent 0 84%, #000 84.5% 100%);
+  mask: radial-gradient(circle, transparent 0 84%, #000 84.5% 100%);
+  opacity: 0.92;
+  pointer-events: none;
+  transition:
+    opacity 0.15s,
+    filter 0.15s;
+}
+.skin-walkman #dial:hover::before,
+.skin-walkman #dial.dragging::before {
+  opacity: 1;
+  filter: drop-shadow(0 0 2px #f0ffe0);
+}
+.skin-walkman .dial-face {
+  inset: 0;
+  background: repeating-conic-gradient(
+    #3c5b4b 0 1.8deg,
+    transparent 1.8deg 5deg
+  );
+  mask-image: radial-gradient(circle, transparent 0 80%, #000 80.5% 100%);
+  -webkit-mask-image: radial-gradient(
+    circle,
+    transparent 0 80%,
+    #000 80.5% 100%
+  );
+  box-shadow: none;
+  border-radius: 50%;
+}
+.skin-walkman .dial-face i {
+  display: none;
+}
+.skin-walkman #back {
+  display: none;
+}
+.skin-walkman #walkman-remote-chrome {
+  display: block;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: #495c53;
+  font-family: Arial, sans-serif;
+}
+.wm-remote-port {
+  position: absolute;
+  left: 159px;
+  top: -36px;
+  width: 42px;
+  height: 44px;
+  background: linear-gradient(
+    90deg,
+    #162429,
+    #485a5d 27%,
+    #233639 70%,
+    #112026
+  );
+  border-radius: 8px 8px 0 0;
+  box-shadow: inset 0 1px #8d9b97;
+  border: 1px solid #17272a;
+  z-index: -1;
+}
+.wm-recess {
+  position: absolute;
+  inset: 44px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 215deg,
+    #73827b,
+    #aebbb2 22%,
+    #dae2d7 39%,
+    #8f9f94 64%,
+    #626f69 84%,
+    #a1b0a6
+  );
+  border: 1px solid #8d9c92;
+  box-shadow:
+    inset 3px 6px 9px #354b3ca6,
+    inset -2px -3px 5px #f7fbebc9,
+    0 1px 1px #f5fae9;
+  pointer-events: none;
+}
+.wm-recess::after {
+  content: "";
+  position: absolute;
+  inset: 22px;
+  border: 2px solid #b1bdb1;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 3px 4px #3c503d99,
+    0 -1px 2px #f5fae780,
+    0 1px 1px #5e7365;
+  background: linear-gradient(145deg, #687b6a, #dce5d3);
+}
+.wm-remote-lettering {
+  position: absolute;
+  inset: 0;
+  width: 360px;
+  height: 360px;
+  overflow: visible;
+  fill: #52645a;
+  stroke: none;
+  pointer-events: none;
+  filter: drop-shadow(0 1px #faffed80);
+}
+.wm-remote-lettering text {
+  font-family: Arial, sans-serif;
+  font-weight: 800;
+}
+.wm-remote-brand {
+  font-size: 17px;
+  letter-spacing: 1px;
+}
+.wm-remote-sony {
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+.wm-arc-key {
+  position: absolute;
+  pointer-events: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  color: #475e50;
+  transform: translateY(2px);
+  transition:
+    filter 0.14s,
+    transform 0.12s;
+}
+.wm-arc-key > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  stroke: none;
+  fill: none;
+  overflow: visible;
+  pointer-events: none;
+}
+.wm-key-surface {
+  fill: url(#wm-key-metal);
+  stroke: #4d6055;
+  stroke-width: 1.5;
+  filter: drop-shadow(0 -1px 0 #32463b) drop-shadow(0 1px 1px #f1f8e755);
+  transition:
+    filter 0.14s,
+    stroke 0.14s;
+}
+.wm-arc-key:hover .wm-key-surface,
+.wm-arc-key:focus-visible .wm-key-surface {
+  filter: brightness(1.18) drop-shadow(0 -1px 0 #32463b)
+    drop-shadow(0 0 2px #efffd3);
+  stroke: #e4eedf;
+  stroke-width: 1.8;
+}
+.wm-arc-key:active .wm-key-surface {
+  filter: brightness(0.84);
+  stroke: #5e7866;
+}
+.wm-arc-key:active {
+  transform: translateY(5px);
+}
+.wm-key-icon svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  filter: drop-shadow(0 1px #fff8);
+}
+.wm-key-label {
+  fill: currentColor;
+  stroke: none;
+  font:
+    700 10px Arial,
+    sans-serif;
+  filter: drop-shadow(0 1px #fff8);
+}
+.wm-remote-like[aria-pressed="true"] {
+  color: #c83d4f;
+}
+.wm-remote-like[aria-pressed="true"] .wm-key-icon svg {
+  fill: currentColor;
+}
+.wm-arc-key:disabled {
+  opacity: 0.4;
+}
+.skin-walkman:not(.compact-mode) .shell {
+  position: absolute;
+  left: 884px;
+  top: 254px;
+  right: auto;
+  width: 212px;
+  height: 212px;
+  border-radius: 50%;
+  border: 4px solid #63735e;
+  background: radial-gradient(
+    ellipse at 34% 25%,
+    #c3cca3,
+    #a4b48b 75%,
+    #91a17b
+  );
+  box-shadow:
+    0 0 0 1px #344c35,
+    inset 1px 3px 9px #314b2b66;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 18px 16px;
+  color: var(--lcd-ink);
+  font-family: "Courier New", monospace;
+  overflow: hidden;
+}
+.skin-walkman:not(.compact-mode) .shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 12;
+  background: linear-gradient(
+    125deg,
+    #ffffff14,
+    transparent 45%,
+    #ffffff08 45.4%,
+    transparent 78%
+  );
+  border-radius: 50%;
+  box-shadow: inset 0 0 9px #344c2630;
+}
+.skin-walkman header,
+.skin-walkman #ipod-status,
+.skin-walkman #ipod-menu-preview,
+.skin-walkman:not(.compact-mode) footer {
+  display: none !important;
+}
+.skin-walkman:not(.compact-mode) #walkman-lcd-status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 18px;
+  min-height: 18px;
+  margin: 0 17px 5px;
+  padding: 0 2px;
+  border-bottom: 1px solid #516b3b44;
+  font-size: 10px;
+  color: var(--lcd-ink);
+}
+#walkman-lcd-page {
+  min-width: 0;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 10px;
+}
+#walkman-lcd-symbol svg {
+  width: 10px;
+  height: 10px;
+  color: var(--lcd-ink);
+}
+.wm-lcd-battery {
+  font-size: 7px;
+  letter-spacing: -1px;
+}
+.skin-walkman:not(.compact-mode) main {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+}
+.skin-walkman .view {
+  animation: none;
+}
+.skin-walkman #browse-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+.skin-walkman .section-heading {
+  display: none !important;
+}
+.skin-walkman .track-list {
+  background: none;
+  padding: 0;
+  scrollbar-width: none;
+  touch-action: auto;
+}
+.skin-walkman .track-list::-webkit-scrollbar {
+  display: none;
+}
+.skin-walkman .track-row {
+  position: relative;
+  padding: 4px 5px;
+  gap: 0;
+  min-height: 27px;
+  border: 0;
+  color: var(--lcd-ink);
+  font-family: inherit;
+}
+.skin-walkman .track-row .row-art,
+.skin-walkman .track-row .track-artist {
+  display: none;
+}
+.skin-walkman .track-row .track-title {
+  margin: 0;
+  font:
+    700 14px/1.25 "Courier New",
+    monospace;
+  color: inherit;
+  letter-spacing: 0;
+}
+.skin-walkman .track-row.current .track-title {
+  color: inherit;
+}
+.skin-walkman .track-row:after {
+  content: "›";
+  font-size: 17px;
+  margin-left: 4px;
+  line-height: 1;
+}
+.skin-walkman #browse-view[hidden] .track-row:after,
+.skin-walkman.compact-mode .track-row:after {
+  content: none;
+}
+.skin-walkman .track-row.selected {
+  background: #344b2ed9;
+  color: #ced7af;
+  box-shadow: inset 0 0 0 1px #2f482a;
+}
+.skin-walkman .track-row:hover:not(.selected) {
+  background: #44592c17;
+}
+.skin-walkman #player-view {
+  display: block;
+  background: none;
+  height: 100%;
+}
+.skin-walkman .song-top,
+.skin-walkman .timeline,
+.skin-walkman .transport,
+.skin-walkman #more {
+  display: none !important;
+}
+.skin-walkman #walkman-lcd-media {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 0;
+  color: var(--lcd-ink);
+}
+#walkman-lcd-cover {
+  display: block;
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  color: var(--lcd-ink);
+}
+#walkman-title-clip {
+  display: block;
+  width: 136px;
+  min-height: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+  font:
+    12px/14px "Courier New",
+    monospace;
+  color: var(--lcd-ink);
+}
+#walkman-title-text {
+  display: inline-block;
+  white-space: nowrap;
+}
+#walkman-lcd-time {
+  font:
+    10px/11px "Courier New",
+    monospace;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--lcd-ink);
+}
+.skin-walkman:not(.compact-mode) #walkman-lcd-volume {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 5px;
+  height: 14px;
+  min-height: 14px;
+  margin: 3px 15px 0;
+  color: var(--lcd-ink);
+  pointer-events: none;
+}
+.wm-volume-caption {
+  font:
+    8px/10px "Courier New",
+    monospace;
+}
+.wm-volume-columns {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+}
+.wm-volume-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  width: 4px;
+}
+.wm-volume-column i {
+  display: block;
+  width: 4px;
+  height: 2px;
+  background: #344b2e24;
+}
+.wm-volume-column.filled i {
+  background: currentColor;
+}
+#walkman-title-clip.is-overflowing #walkman-title-text {
+  animation: ipod-title-scroll var(--ipod-title-duration, 6s) ease-in-out
+    infinite alternate;
+}
+.skin-walkman #settings {
+  top: 37px;
+  left: 18px;
+  right: 18px;
+  width: auto;
+  max-height: 131px;
+  overflow: auto;
+  border: 1px solid #61754d;
+  border-radius: 1px;
+  background: #b6c59d;
+  color: var(--lcd-ink);
+  padding: 3px;
+  box-shadow: 0 3px 8px #27381c40;
+  font-family: inherit;
+}
+.skin-walkman #settings > button {
+  padding: 6px 4px;
+  font:
+    11px "Courier New",
+    monospace;
+  gap: 6px;
+}
+.skin-walkman #settings > button.ipod-option-selected {
+  background: #344b2e;
+  color: #d6dfbd;
+}
+.skin-walkman #settings svg {
+  width: 13px;
+  height: 13px;
+}
+.skin-walkman #settings .volume {
+  display: none;
+}
+.skin-walkman #volume-hud {
+  display: none !important;
+}
+.skin-walkman #preferences-view {
+  padding: 1px 5px;
+  overflow: auto;
+  background: none;
+  scrollbar-width: none;
+}
+.skin-walkman .preference-section {
+  padding: 3px 0 9px;
+}
+.skin-walkman .preference-section h2 {
+  font:
+    700 12px "Courier New",
+    monospace;
+  margin: 0 0 6px;
+}
+.skin-walkman .preference-section p,
+.skin-walkman .preference-note {
+  display: none;
+}
+.skin-walkman .preference-options {
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.skin-walkman .preference-options button {
+  font:
+    11px "Courier New",
+    monospace;
+  padding: 5px;
+  border: 1px solid #687e4c;
+  border-radius: 1px;
+  background: #bac79e;
+  color: #3b522e;
+}
+.skin-walkman .preference-options .chosen,
+.skin-walkman .preference-options .dial-selected {
+  color: #c8d5b0;
+  background: #3b542d;
+  border-color: #3b542d;
+  box-shadow: none;
+  outline: none;
+}
+.skin-walkman #source-status {
+  font-size: 10px;
+}
+.skin-walkman #browser-source-config {
+  padding: 0 0 9px;
+}
+.skin-walkman #browser-source-config label {
+  font:
+    10px "Courier New",
+    monospace;
+  color: #4d623b;
+  margin: 0 0 5px;
+}
+.skin-walkman #browser-source-config > div {
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.skin-walkman #proxy-url {
+  width: 100%;
+  flex-basis: 100%;
+  font:
+    11px "Courier New",
+    monospace;
+  background: #ccd5b4;
+  color: #30482c;
+  border: 1px solid #6c8053;
+  padding: 4px;
+}
+.skin-walkman #browser-source-config button {
+  font-size: 11px;
+  color: #344b2e;
+}
+.skin-walkman #search-form {
+  top: 37px;
+  left: 16px;
+  right: 16px;
+  height: auto;
+  min-height: 60px;
+  padding: 5px;
+  gap: 4px;
+  border: 1px solid #617b49;
+  border-radius: 2px;
+  background: #bdcba2;
+  box-shadow: 0 4px 8px #243b2566;
+  flex-wrap: wrap;
+  color: #344b2e;
+}
+.skin-walkman #search-form input {
+  order: 3;
+  width: 100%;
+  flex-basis: 100%;
+  font:
+    13px "Courier New",
+    monospace;
+  color: #344b2e;
+}
+.skin-walkman #search-kind {
+  font:
+    10px "Courier New",
+    monospace;
+  max-width: 77px;
+  background: #a3b88b;
+  color: #344b2e;
+  padding: 4px;
+}
+.skin-walkman #search-form > button[type="submit"] {
+  font-size: 10px;
+  color: #344b2e;
+}
+.skin-walkman #search-form svg {
+  width: 13px;
+  height: 13px;
+}
+.skin-walkman #search-close {
+  width: 20px;
+  height: 20px;
+}
+.skin-walkman #empty {
+  height: 100%;
+  font-size: 12px;
+  gap: 10px;
+  color: #344b2e;
+}
+.skin-walkman #empty-action {
+  font-size: 11px;
+  padding: 5px 10px;
+  border-color: #617747;
+  color: #344b2e;
+}
+.skin-walkman #tuner-view {
+  padding: 3px 5px;
+  background: none;
+  overflow: auto;
+}
+.skin-walkman #tuner-view::before {
+  display: none;
+}
+.skin-walkman .tuner-kicker {
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.skin-walkman .tuner-readout {
+  margin-top: 4px;
+  gap: 5px;
+}
+.skin-walkman .tuner-readout strong {
+  font:
+    700 30px "Courier New",
+    monospace;
+}
+.skin-walkman .tuner-readout span {
+  font:
+    11px "Courier New",
+    monospace;
+  color: #526b36;
+}
+.skin-walkman .tuner-scale {
+  height: 18px;
+  margin: 9px 0;
+  border-color: #6a8052;
+}
+.skin-walkman .tuner-scale i {
+  height: 8px;
+  background: #6a8052;
+}
+.skin-walkman .tuner-scale i:nth-child(odd) {
+  height: 12px;
+}
+.skin-walkman #tuner-needle {
+  height: 25px;
+  background: #344b2e;
+  box-shadow: none;
+}
+.skin-walkman .tuner-signal {
+  height: 13px;
+  margin-bottom: 4px;
+  gap: 3px;
+}
+.skin-walkman .tuner-signal i {
+  max-height: 13px;
+  background: #6a805255;
+}
+.skin-walkman .tuner-signal i.active {
+  background: #344b2e;
+}
+.skin-walkman #tuner-station {
+  font:
+    700 12px "Courier New",
+    monospace;
+  max-width: 100%;
+  margin-top: 3px;
+}
+.skin-walkman #tuner-country {
+  font-size: 10px;
+  color: #526b36;
+  margin-top: 3px;
+}
+.skin-walkman #window-drag {
+  left: 315px;
+  right: auto;
+  width: 430px;
+  top: 123px;
+  height: 43px;
+}
+.skin-walkman #toast {
+  left: 950px;
+  top: 320px;
+  right: auto;
+  bottom: auto;
+  transform: none;
+  width: 190px;
+  max-width: none;
+  padding: 10px;
+  font:
+    11px/1.3 "Courier New",
+    monospace;
+  background: #344b2ee8;
+  color: #d5e0c1;
+  z-index: 14;
+}
+.skin-walkman.compact-mode #walkman-chassis,
+.skin-walkman.compact-mode #walkman-lcd-status,
+.skin-walkman.compact-mode #walkman-lcd-media,
+.skin-walkman.compact-mode #walkman-lcd-volume {
+  display: none !important;
+}
+.mobile-viewport body.browser-mode.skin-walkman.compact-mode {
+  left: var(--mobile-x);
+  top: var(--mobile-y);
+  right: auto;
+  bottom: auto;
+  width: var(--mobile-width);
+  height: var(--mobile-height);
+  transform-origin: center;
+  transform: translate(-50%, -50%) rotate(var(--mobile-angle))
+    scale(var(--mobile-scale));
+  min-height: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wm-reel {
+    animation: none;
+  }
+}

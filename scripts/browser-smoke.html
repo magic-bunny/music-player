@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Browser integration checks</title><link rel="stylesheet" href="../web/skins.css"><link rel="stylesheet" href="../web/walkman.css">
+<button id="run">Run browser checks</button><pre id="result">Ready</pre>
+<script type="module">
+import {scanBrowserFolder,MediaFiles} from '../web/platform/browser-files.mjs';
+import {LibraryStore} from '../web/core/library-store.mjs';
+import {createBrowserAdapter} from '../web/platform/browser-adapter.mjs';
+import {Marquee} from '../web/ui/marquee.mjs';
+const storage={getItem:key=>localStorage.getItem('smoke:'+key),setItem:(key,value)=>localStorage.setItem('smoke:'+key,value)};
+const check=(value,message)=>{if(!value)throw Error(message);};
+document.getElementById('run').onclick=async()=>{
+ const result=document.getElementById('result');result.textContent='Running';
+ try{
+  const store=new LibraryStore(storage);const restored=!!store.read();
+  if(!restored){
+   const wav=new ArrayBuffer(44+8000*4);const data=new DataView(wav);const text=(at,s)=>[...s].forEach((ch,i)=>data.setUint8(at+i,ch.charCodeAt(0)));
+   text(0,'RIFF');data.setUint32(4,wav.byteLength-8,true);text(8,'WAVEfmt ');data.setUint32(16,16,true);data.setUint16(20,1,true);data.setUint16(22,1,true);data.setUint32(24,8000,true);data.setUint32(28,16000,true);data.setUint16(32,2,true);data.setUint16(34,16,true);text(36,'data');data.setUint32(40,wav.byteLength-44,true);
+   const file=new File([wav],'Silence.wav',{type:'audio/wav',lastModified:123});Object.defineProperty(file,'webkitRelativePath',{value:'Test Album/Silence.wav'});
+   const canvas=document.createElement('canvas');canvas.width=canvas.height=16;canvas.getContext('2d').fillRect(0,0,16,16);const blob=await new Promise(r=>canvas.toBlob(r));
+   const image=new File([blob],'Test Album.png',{type:'image/png'});Object.defineProperty(image,'webkitRelativePath',{value:'Test Album/Test Album.png'});
+   const scanned=await scanBrowserFolder([file,image]);await new MediaFiles().save(scanned.entries);store.initialize({favorites:[],playlists:[scanned.playlist]});
+  }
+  const invoke=createBrowserAdapter(storage);const playlists=await invoke('local_playlists');check(playlists.length===1,'Playlist missing after restore');
+  const list=await invoke('collection_tracks',{id:playlists[0].id});check(list.tracks.length===1,'Track missing');
+  const cover=await invoke('artwork',{ids:[playlists[0].id]});check(cover[playlists[0].id]?.startsWith('blob:'),'Stored image missing');
+  await invoke('control',{action:'volume',value:0});await invoke('play',{queue:[list.tracks[0].id],index:0});
+  let snapshot;const deadline=Date.now()+10000;do{await new Promise(r=>setTimeout(r,50));snapshot=await invoke('snapshot');if(snapshot.error)throw Error(snapshot.error);}while(snapshot.position<.05&&Date.now()<deadline);
+  check(snapshot.position>0,'Audio did not advance');await invoke('control',{action:'toggle'});check((await invoke('snapshot')).paused,'Pause failed');
+  await invoke('control',{action:'seek',value:1});check((await invoke('snapshot')).position>=1,'Seek failed');
+  const before=await invoke('favorites');await invoke('toggle_favorite',{id:list.tracks[0].id});check((await invoke('favorites')).length!==before.length,'Favorite write failed');await invoke('toggle_favorite',{id:list.tracks[0].id});
+  await invoke('control',{action:'stop'});
+  const clip=document.createElement('span'),text=document.createElement('span');clip.id='walkman-title-clip';text.id='walkman-title-text';clip.style.width='121px';clip.style.font='14px sans-serif';clip.append(text);document.body.append(clip);
+  const marquee=new Marquee(clip,text);const title='A long title must continue scrolling through repeated playback updates';marquee.update(title);
+  let moved=false;const animationDeadline=Date.now()+10000;
+  while(Date.now()<animationDeadline){marquee.update(title);await new Promise(r=>setTimeout(r,250));const transform=getComputedStyle(text).transform;if(transform!=='none'&&Math.abs(new DOMMatrixReadOnly(transform).m41)>2){moved=true;break;}}
+  marquee.dispose();clip.remove();check(moved,'Marquee did not advance under repeated snapshots');
+  result.textContent=JSON.stringify({ok:true,restored,indexedDB:true,localPlayback:true,cover:true,seek:true,favorites:true,marquee:true});
+ }catch(error){result.textContent=JSON.stringify({ok:false,error:String(error)});}
+};
+</script></html>

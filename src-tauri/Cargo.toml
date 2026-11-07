@@ -1,0 +1,21 @@
+[package]
+name = "music-player"
+version = "1.0.0"
+edition = "2021"
+description = "Car Thing inspired music player"
+publish = false
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["macos-private-api"] }
+tauri-plugin-dialog = "2"
+ureq = { version = "3", features = ["json"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+base64 = "0.22"
+rodio = { version = "0.21.1", default-features = false, features = ["playback", "symphonia-mp3", "symphonia-aac", "symphonia-isomp4", "symphonia-flac", "symphonia-wav", "symphonia-vorbis", "symphonia-ogg", "symphonia-pcm"] }
+
+
+rand = "0.9"

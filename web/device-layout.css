@@ -1,0 +1,9 @@
+html.aligned-viewport{display:block!important;padding:0!important;min-height:100dvh;height:100dvh;overflow:hidden}
+body.aligned-device.skin-carthing:not(.compact-mode){position:fixed;left:var(--mobile-x);top:var(--mobile-y);right:auto;bottom:auto;width:var(--mobile-width);height:var(--mobile-height);min-height:0;margin:0;padding:38px 36px 38px 56px;transform-origin:center;transform:translate(-50%,-50%) rotate(var(--mobile-angle)) scale(var(--mobile-scale));overflow:visible;--hardware:240px;--dial-size:296px;--back-size:88px}
+.aligned-device.skin-carthing:not(.compact-mode) header{height:72px}
+.aligned-device.skin-carthing:not(.compact-mode) footer{height:60px}
+.aligned-device.skin-carthing:not(.compact-mode) #song-title{font-size:48px;letter-spacing:0}
+.aligned-device.skin-carthing:not(.compact-mode) #song-artist{font-size:24px}
+.aligned-device.skin-carthing:not(.compact-mode) #play-context{font-size:18px}
+.brand-tag[data-tab] .brand-logo{width:22px;height:22px}
+.brand-tag[data-tab] .brand-title{font-size:14px;letter-spacing:0}
