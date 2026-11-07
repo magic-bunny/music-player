@@ -37,10 +37,10 @@ Music Player 是一个拟物音乐播放器。三套硬件外观共享同一套�
 
 | 平台 | 安装包 |
 | --- | --- |
-| macOS Apple Silicon | [下载 v1.0.0](https://github.com/magic-bunny/music-player/releases/tag/v1.0.0) |
-| macOS Intel | [下载 v1.0.0](https://github.com/magic-bunny/music-player/releases/tag/v1.0.0) |
-| Windows x64 | [下载 NSIS / MSI](https://github.com/magic-bunny/music-player/releases/tag/v1.0.0) |
-| Linux x64 | [下载 AppImage / deb](https://github.com/magic-bunny/music-player/releases/tag/v1.0.0) |
+| macOS Apple Silicon | [DMG](https://github.com/magic-bunny/music-player/releases/download/v1.0.0/music-player-1.0.0-darwin-aarch64.dmg) |
+| macOS Intel | [DMG](https://github.com/magic-bunny/music-player/releases/download/v1.0.0/music-player-1.0.0-darwin-x64.dmg) |
+| Windows x64 | [NSIS EXE](https://github.com/magic-bunny/music-player/releases/download/v1.0.0/music-player-1.0.0-windows-x64-setup.exe) · [MSI](https://github.com/magic-bunny/music-player/releases/download/v1.0.0/music-player-1.0.0-windows-x64.msi) |
+| Linux x64 | [AppImage](https://github.com/magic-bunny/music-player/releases/download/v1.0.0/music-player-1.0.0-linux-amd64.AppImage) · [deb](https://github.com/magic-bunny/music-player/releases/download/v1.0.0/music-player-1.0.0-linux-amd64.deb) |
 
 1.0 安装包由 GitHub Actions 在 macOS、Windows 和 Linux runner 上分别构建并附加到同一个 Release。当前包未进行 Apple Developer ID 或 Windows Authenticode 签名，系统可能显示来自未知开发者的标准提示。
 
