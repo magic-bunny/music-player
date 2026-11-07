@@ -9,13 +9,28 @@ import { skinIds } from "../web/ui/skins/index.mjs";
 
 function tabRects(layout) {
   return layout.tabs.map((tab) => {
-    const dx = tab.left - layout.canvasWidth / 2,
-      dy = tab.top - layout.canvasHeight / 2;
+    const corners = [
+      [0, 0],
+      [TAB_LAYOUT.width, 0],
+      [0, TAB_LAYOUT.height],
+      [TAB_LAYOUT.width, TAB_LAYOUT.height],
+    ].map(([x, y]) => {
+      const dx = tab.left + x - layout.canvasWidth / 2,
+        dy = tab.top + y - layout.canvasHeight / 2;
+      return {
+        x: layout.x + (layout.angle ? -dy : dx) * layout.scale,
+        y: layout.y + (layout.angle ? dx : dy) * layout.scale,
+      };
+    });
     return {
-      x: layout.x + (layout.angle ? -dy : dx) * layout.scale,
-      y: layout.y + (layout.angle ? dx : dy) * layout.scale,
-      width: TAB_LAYOUT.width * layout.scale,
-      height: TAB_LAYOUT.height * layout.scale,
+      x: Math.min(...corners.map((point) => point.x)),
+      y: Math.min(...corners.map((point) => point.y)),
+      width:
+        Math.max(...corners.map((point) => point.x)) -
+        Math.min(...corners.map((point) => point.x)),
+      height:
+        Math.max(...corners.map((point) => point.y)) -
+        Math.min(...corners.map((point) => point.y)),
       angle: layout.angle + tab.angle,
     };
   });
@@ -40,7 +55,8 @@ test("all four tab rectangles stay aligned with each active skin", () => {
         r.tabs.map((tab) => tab.id),
         tabIds,
       );
-      for (const rectangle of tabRects(r)) assert.equal(rectangle.angle, 0);
+      for (const rectangle of tabRects(r))
+        assert.equal(rectangle.angle, r.angle);
       assert.ok(
         r.x - r.renderedWidth / 2 >= 7 + (insets.left || 0) + 6 - 1e-6,
       );
@@ -113,6 +129,21 @@ test("mobile orientations preserve each hardware design", () => {
   }
   assert.equal(fitLandscape({ width: 390, height: 844, skin: "ipod" }).angle, 0);
   assert.equal(fitLandscape({ width: 844, height: 390, skin: "ipod" }).angle, 0);
+});
+
+test("portrait-phone tabs keep their chassis-local positions", () => {
+  for (const skin of ["carthing", "walkman"]) {
+    const desktop = fitLandscape({
+        width: 1600,
+        height: 1000,
+        skin,
+        mobile: false,
+      }),
+      phone = fitLandscape({ width: 390, height: 844, skin });
+    assert.equal(phone.angle, 90);
+    assert.deepEqual(phone.tabs, desktop.tabs);
+    assert.ok(phone.tabs.every((tab) => tab.angle === 0));
+  }
 });
 
 test("desktop chassis centers unless a tab rail would leave the viewport", () => {

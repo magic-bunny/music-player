@@ -17,7 +17,6 @@ export const myPlayer = {
     portrait: false,
     fitDesktop: true,
     tabs: { x: 12, y: 96 },
-    rotatedTabs: { x: 96, y: 548 },
   },
   windowAction: "skin-my-player",
   seeking: false,
@@ -32,7 +31,7 @@ export const myPlayer = {
 
 The descriptor must keep the following behavior stable:
 
-- `geometry` describes one fixed design canvas. The shared viewport fitter centers and scales it, applies safe-area insets, and rotates landscape hardware on portrait phones.
+- `geometry` describes one fixed design canvas. `tabs` is the top-left position of the label rail in that canvas. The shared viewport fitter centers and scales the complete hardware, applies safe-area insets, and rotates landscape hardware together with its labels on portrait phones.
 - `homeItems` and `catalogItems` reshape display data only. They must not fetch music or mutate player state.
 - `layout` selects one of the shared browsing layouts.
 - `centerAction` and `rotationAction` map the skin's physical controls to the shared controller actions.

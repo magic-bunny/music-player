@@ -20,7 +20,6 @@ export const walkman = {
     portrait: false,
     fitDesktop: true,
     tabs: { x: 50, y: 119 },
-    rotatedTabs: { x: 414, y: 666 },
   },
   windowAction: "skin-walkman",
   holdForOptions: true,

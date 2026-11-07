@@ -9,7 +9,6 @@ export const ipod = {
     portrait: true,
     fitDesktop: true,
     tabs: { x: 22, y: 194 },
-    rotatedTabs: { x: 54, y: 816 },
   },
   windowAction: "skin-ipod",
   seeking: true,

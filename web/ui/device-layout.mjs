@@ -7,7 +7,7 @@ function frameFor(id, mobile, portrait) {
   // Portrait hardware stays upright. Landscape hardware rotates only when a
   // phone is physically portrait so its native landscape canvas can fill it.
   const rotated = mobile && !geometry.portrait && portrait;
-  const anchor = rotated ? geometry.rotatedTabs : geometry.tabs;
+  const anchor = geometry.tabs;
   const project = (x, y) => (rotated ? { x: -y, y: x } : { x, y });
   const corners = [
     [0, 0],
@@ -24,7 +24,8 @@ function clamp(value, min, max) {
 
 // Center the active chassis in the usable viewport. Its tab rail is included
 // when fitting and can nudge the chassis only as much as needed to avoid a
-// cutout or screen edge. Tabs counter-rotate on portrait phones.
+// cutout or screen edge. Tabs use chassis-local coordinates, so they rotate
+// and move with the hardware on portrait phones.
 export function fitLandscape({
   width,
   height,
@@ -76,18 +77,23 @@ export function fitLandscape({
   });
   const tabs = tabIds.map((id, index) => ({
     id,
-    left: anchor.x + (rotated ? index * TAB_LAYOUT.gap : 0),
-    top: anchor.y + (rotated ? 0 : index * TAB_LAYOUT.gap),
-    angle: rotated ? -90 : 0,
+    left: anchor.x,
+    top: anchor.y + index * TAB_LAYOUT.gap,
+    angle: 0,
   }));
   const relativeTabs = tabs.flatMap((tab) => {
-    const point = project(tab.left - anchor.x, tab.top - anchor.y);
-    const x = point.x - center.x,
-      y = point.y - center.y;
     return [
-      { x, y },
-      { x: x + TAB_LAYOUT.width, y: y + TAB_LAYOUT.height },
-    ];
+      [0, 0],
+      [TAB_LAYOUT.width, 0],
+      [0, TAB_LAYOUT.height],
+      [TAB_LAYOUT.width, TAB_LAYOUT.height],
+    ].map(([x, y]) => {
+      const point = project(
+        tab.left + x - anchor.x,
+        tab.top + y - anchor.y,
+      );
+      return { x: point.x - center.x, y: point.y - center.y };
+    });
   });
   const bounds = [...relativeDevice, ...relativeTabs];
   const minX = Math.min(...bounds.map((p) => p.x)),

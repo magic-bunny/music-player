@@ -42,7 +42,11 @@ Music Player 是一个拟物音乐播放器。三套硬件外观共享同一套�
 | Windows x64 | [NSIS EXE](https://github.com/magic-bunny/music-player/releases/download/v1.0.0/music-player-1.0.0-windows-x64-setup.exe) · [MSI](https://github.com/magic-bunny/music-player/releases/download/v1.0.0/music-player-1.0.0-windows-x64.msi) |
 | Linux x64 | [AppImage](https://github.com/magic-bunny/music-player/releases/download/v1.0.0/music-player-1.0.0-linux-amd64.AppImage) · [deb](https://github.com/magic-bunny/music-player/releases/download/v1.0.0/music-player-1.0.0-linux-amd64.deb) |
 
-1.0 安装包由 GitHub Actions 在 macOS、Windows 和 Linux runner 上分别构建并附加到同一个 Release。当前包未进行 Apple Developer ID 或 Windows Authenticode 签名，系统可能显示来自未知开发者的标准提示。
+1.0 安装包由 GitHub Actions 在 macOS、Windows 和 Linux runner 上分别构建并附加到同一个 Release。首批 `v1.0.0` macOS 安装包使用临时签名，Gatekeeper 会提示无法验证开发者；后续 macOS Release 必须通过 Apple Developer ID 签名和公证后才能发布。Windows 安装包目前尚未进行 Authenticode 签名。
+
+如果当前 `v1.0.0` DMG 出现“Apple 无法验证 Music Player”的提示，首次启动失败后打开“系统设置 → 隐私与安全性”，在安全性区域找到 Music Player 并选择“仍要打开”。这个操作只应对从本项目 GitHub Release 下载的安装包执行。
+
+维护者发布新版前需要配置 Apple Developer ID 与公证凭据，具体步骤见 [macOS 发布说明](docs/MACOS_RELEASE.md)。CI 在凭据缺失时会停止 macOS 打包，避免继续上传无法通过 Gatekeeper 的 DMG。
 
 ## 使用手册
 

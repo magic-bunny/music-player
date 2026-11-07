@@ -15,7 +15,6 @@ export const carThing = {
     portrait: false,
     fitDesktop: true,
     tabs: { x: 4, y: 64 },
-    rotatedTabs: { x: 294, y: 556 },
   },
   windowAction: "skin-carthing",
   seeking: false,
