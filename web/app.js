@@ -570,7 +570,11 @@ function updateOverflowTitles(root = document) {
     }
   });
 }
-let sourceList = [{ id: "netease", name: "NetEase Music" }],
+let sourceList = [
+    browserMode
+      ? { id: "audius", name: "Audius" }
+      : { id: "netease", name: "NetEase Music" },
+  ],
   settingsSelection = 0,
   sourceLoading = false,
   sourceError = false,
@@ -724,32 +728,6 @@ async function changeSource(source, { persist = true } = {}) {
 for (const button of document.querySelectorAll("[data-language]"))
   button.onclick = () => changeLanguage(button.dataset.language);
 $("source-retry").onclick = () => loadSource();
-if (runtime.capabilities.proxyConfiguration) {
-  $("browser-source-config").hidden = false;
-  $("proxy-url").value = localStorage.getItem("yuyin-netease-proxy-v1") || "";
-  $("browser-source-config").onsubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await invoke("configure_proxy", { url: $("proxy-url").value });
-      sourceList = await invoke("music_sources");
-      $("source-options").replaceChildren();
-      if (!sourceList.some((p) => p.id === preferences.source)) {
-        preferences.source = "audius";
-        persistPreferences();
-        collectionCache.clear();
-        await loadSource();
-      } else if (preferences.source === "netease") {
-        collectionCache.clear();
-        await loadSource();
-      }
-      renderPreferences();
-      toast(t("Saved"));
-    } catch (error) {
-      toast(error);
-    }
-  };
-}
-
 function renderBrowse() {
   if (["player", "tuner", "preferences"].includes(state.view)) return;
   moreCard.title = t("More");
@@ -757,7 +735,7 @@ function renderBrowse() {
   loadMoreCard.title = t("Load more");
   loadMoreCard.artist = t(
     sourceList.find((p) => p.id === preferences.source)?.name ||
-      "NetEase Music",
+      (browserMode ? "Audius" : "NetEase Music"),
   );
   radioMoreCard.title = t("More");
   radioMoreCard.artist = t("More stations");
@@ -1677,10 +1655,17 @@ if (invoke) {
   try {
     sourceList = await invoke("music_sources");
   } catch {
-    sourceList = [{ id: "netease", name: "NetEase Music" }];
+    sourceList = [
+      browserMode
+        ? { id: "audius", name: "Audius" }
+        : { id: "netease", name: "NetEase Music" },
+    ];
   }
-  if (!sourceList.some((p) => p.id === preferences.source))
-    preferences.source = sourceList[0]?.id || "netease";
+  if (!sourceList.some((p) => p.id === preferences.source)) {
+    preferences.source =
+      sourceList[0]?.id || (browserMode ? "audius" : "netease");
+    persistPreferences();
+  }
 }
 translateDocument();
 renderPreferences();

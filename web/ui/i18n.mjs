@@ -10,12 +10,6 @@ export const messages = {
     "转动调整音量；按下调整进度；长按打开选项。",
     "回して音量、押して再生位置、長押しでオプション。",
   ],
-  "NetEase API address (optional)": [
-    "网易云 API 地址（可选）",
-    "NetEase API アドレス（任意）",
-  ],
-  Save: ["保存", "保存"],
-  Saved: ["已保存", "保存しました"],
   "Press Play to enable audio.": [
     "请点击播放以启用音频。",
     "再生ボタンを押してください。",

@@ -9,11 +9,6 @@ body.browser-mode.preview-mode{background:transparent}
 .browser-mode footer{gap:10px}
 .browser-mode #mini-play,.browser-mode #mini-next{flex-shrink:0}
 .browser-mode.compact-mode{position:fixed;right:24px;bottom:24px;width:min(440px,calc(100vw - 48px));height:88px;min-height:0}
-#browser-source-config{padding:10px 0 18px}
-#browser-source-config label{font-size:14px;color:#b5b3b4;display:block;margin-bottom:10px}
-#browser-source-config>div{display:flex;gap:12px}
-#proxy-url{min-width:0;flex:1;border:1px solid #444;background:#161a18;border-radius:5px;color:#eee;padding:10px;font-size:14px}
-#browser-source-config button{color:var(--green);padding:8px}
 .safe-area-probe{position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
 /* Fit one landscape canvas inside the physical screen's safe area. Child hit
    targets rotate and scale with the chassis, including on portrait phones. */
@@ -40,5 +35,4 @@ body.browser-mode.mobile-landscape{position:fixed;left:var(--mobile-x);top:var(-
 .mobile-landscape #preferences-view{padding:4px 28px 14px}.mobile-landscape .preference-options button{font-size:20px;padding:10px 18px}
 .mobile-landscape #tuner-view{padding:24px 40px}.mobile-landscape .tuner-readout strong{font-size:80px}.mobile-landscape #tuner-station{font-size:32px}
 .mobile-landscape #search-form input{font-size:20px}
-.mobile-landscape #proxy-url{font-size:18px}
 .mobile-landscape.compact-mode footer{height:100%;padding:10px 14px}

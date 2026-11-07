@@ -1036,35 +1036,6 @@ body.skin-walkman:not(.compact-mode) {
 .skin-walkman #source-status {
   font-size: 10px;
 }
-.skin-walkman #browser-source-config {
-  padding: 0 0 9px;
-}
-.skin-walkman #browser-source-config label {
-  font:
-    10px "Courier New",
-    monospace;
-  color: #4d623b;
-  margin: 0 0 5px;
-}
-.skin-walkman #browser-source-config > div {
-  gap: 4px;
-  flex-wrap: wrap;
-}
-.skin-walkman #proxy-url {
-  width: 100%;
-  flex-basis: 100%;
-  font:
-    11px "Courier New",
-    monospace;
-  background: #ccd5b4;
-  color: #30482c;
-  border: 1px solid #6c8053;
-  padding: 4px;
-}
-.skin-walkman #browser-source-config button {
-  font-size: 11px;
-  color: #344b2e;
-}
 .skin-walkman #search-form {
   top: 37px;
   left: 16px;

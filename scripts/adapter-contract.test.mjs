@@ -127,7 +127,10 @@ for (const [name, create] of [
 ])
   test(`${name} satisfies the shared catalog, favorite and playback contract`, async () => {
     const invoke = createBackend(await create());
-    assert.ok((await invoke("music_sources")).length);
+    const sources = await invoke("music_sources");
+    if (name === "browser")
+      assert.deepEqual(sources, [{ id: "audius", name: "Audius" }]);
+    else assert.ok(sources.length);
     assert.equal(
       (
         await invoke("collections", { query: "", source: "audius", offset: 0 })

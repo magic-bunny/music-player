@@ -1,9 +1,7 @@
 import { LibraryStore, createLibraryAdapter } from "../core/library-store.mjs";
 import {
   AudiusProvider,
-  NeteaseProxyProvider,
   radioStations,
-  proxyUrl,
 } from "./browser-providers.mjs";
 import { BrowserPlayer } from "./browser-player.mjs";
 import {
@@ -12,7 +10,6 @@ import {
   scanBrowserFolder,
 } from "./browser-files.mjs";
 
-export const PROXY_KEY = "yuyin-netease-proxy-v1";
 export function createBrowserAdapter(
   storage,
   { fetcher = fetch, makeAudio } = {},
@@ -22,18 +19,9 @@ export function createBrowserAdapter(
     local = new Map(),
     files = new MediaFiles();
   const providers = new Map([["audius", new AudiusProvider(fetcher)]]);
-  const setProxy = (value) => {
-    const url = proxyUrl(value);
-    if (url) providers.set("netease", new NeteaseProxyProvider(url, fetcher));
-    else providers.delete("netease");
-    return url;
-  };
-  try {
-    setProxy(storage.getItem(PROXY_KEY));
-  } catch {}
   const provider = (id) => {
     const value = providers.get(id);
-    if (!value) throw Error("Configure a NetEase API endpoint in Settings.");
+    if (!value) throw Error("This music source is unavailable in the browser.");
     return value;
   };
   const register = (items) => {
@@ -86,12 +74,6 @@ export function createBrowserAdapter(
             id: p.id,
             name: p.name,
           }));
-        case "configure_proxy": {
-          const url = proxyUrl(args.url);
-          storage.setItem(PROXY_KEY, url);
-          setProxy(url);
-          return;
-        }
         case "collections": {
           const items = await provider(args.source || "audius").collections(
             args.query,

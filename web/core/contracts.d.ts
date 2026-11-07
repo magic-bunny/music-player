@@ -47,7 +47,6 @@ export interface Commands {
   play: {args: {queue: string[]; index: number}; result: void};
   control: {args: {action: Control; value?: number | null}; result: void};
   snapshot: {args: {}; result: Snapshot};
-  configure_proxy: {args: {url: string}; result: void};
   window_action: {args: {action: 'drag' | 'close' | 'compact' | 'restore' | 'skin-ipod' | 'skin-carthing' | 'skin-walkman'}; result: void};
 }
 export type BackendInvoke = <K extends keyof Commands>(command: K, args?: Commands[K]['args']) => Promise<Commands[K]['result']>;

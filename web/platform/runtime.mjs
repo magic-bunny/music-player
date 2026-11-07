@@ -55,7 +55,6 @@ export async function createRuntime(storage) {
     browserMode: !native && (!preview || browserPreview),
     capabilities: Object.freeze({
       nativeWindows: native,
-      proxyConfiguration: !native && !preview,
     }),
   };
 }
