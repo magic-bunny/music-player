@@ -11,6 +11,7 @@
 <p align="center">
   <a href="https://magic-bunny.github.io/music-player/">Try it online</a> ·
   <a href="https://github.com/magic-bunny/music-player/releases/tag/v1.0.0">Download desktop 1.0</a> ·
+  <a href="https://github.com/magic-bunny/music-player/releases/tag/android-v1.0.0-preview.1">Android preview</a> ·
   <a href="docs/CUSTOM_SKINS.md">Build a custom skin</a>
 </p>
 
@@ -58,6 +59,12 @@ open -a "Music Player"
 Enter the macOS administrator password when prompted; Terminal does not display password characters while typing. You only need to run this command once for the installed copy. Reinstalling, replacing, or upgrading to another unnotarized copy may require running it again. This command bypasses Gatekeeper for this copy of Music Player, so use it only after downloading the DMG from this project's GitHub Release. A future Developer ID-signed and notarized release will not require this step.
 
 Maintainers must configure Apple Developer ID and notarization credentials before publishing another release. See [macOS release signing](docs/MACOS_RELEASE.md). The workflow stops macOS packaging when credentials are absent, preventing another unverified DMG from being uploaded.
+
+## Android preview
+
+Download the [Android 1.0 preview APK](https://github.com/magic-bunny/music-player/releases/download/android-v1.0.0-preview.1/music-player-1.0.0-android-arm64.apk). It supports ARM64 devices running Android 8.0 or newer. Allow APK installation for the browser or file manager you use, download the package, and open it to install.
+
+This first APK is a sideload preview rather than a Play Store production build. It uses a CI-generated preview certificate, so a later preview may require uninstalling the previous APK before installation. Local-folder playlist import is not available in the first Android preview; network music, radio, favorites, settings, playback, rotary touch controls, and all three skins use the shared application code.
 
 ## User guide
 
@@ -115,6 +122,13 @@ node scripts/build-pages.mjs
 cargo fmt --check
 cargo test --locked
 cargo clippy --all-targets -- -D warnings
+```
+
+Build an ARM64 Android APK with Android SDK 36, NDK 28.2, Java 17, and the `aarch64-linux-android` Rust target installed:
+
+```sh
+npm ci
+npm run android:build
 ```
 
 Repository layout:

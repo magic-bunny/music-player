@@ -2,7 +2,7 @@
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Music Player",
   "version": "1.0.0",
-  "identifier": "local.rustdemo.yuyin",
+  "identifier": "com.magicbunny.musicplayer",
   "build": {
     "frontendDist": "../web"
   },
@@ -34,6 +34,9 @@
   "bundle": {
     "active": true,
     "targets": "all",
+    "android": {
+      "minSdkVersion": 26
+    },
     "category": "Music",
     "shortDescription": "A tactile music player with three classic hardware skins.",
     "longDescription": "Music Player combines Car Thing, iPod, and Walkman-inspired interfaces with shared playback, radio, local playlists, and browser support.",

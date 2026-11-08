@@ -1,0 +1,83 @@
+name: Android preview
+
+on:
+  push:
+    tags: ['android-v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Install Android SDK and NDK
+        run: |
+          yes | sdkmanager --licenses >/dev/null
+          sdkmanager 'platforms;android-36' 'build-tools;36.0.0' 'ndk;28.2.13676358'
+          echo "NDK_HOME=$ANDROID_HOME/ndk/28.2.13676358" >> "$GITHUB_ENV"
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android
+      - uses: swatinem/rust-cache@v2
+        with:
+          key: android-aarch64
+      - run: npm ci --ignore-scripts
+      - name: Build optimized ARM64 APK
+        run: npm run android:build
+      - name: Sign preview APK
+        id: package
+        run: |
+          version=$(node -p "require('./src-tauri/tauri.conf.json').version")
+          unsigned=src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release-unsigned.apk
+          output=music-player-${version}-android-arm64.apk
+          keytool -genkeypair -noprompt \
+            -keystore "$RUNNER_TEMP/android-preview.jks" \
+            -storepass android -keypass android -alias androidpreview \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -dname 'CN=Music Player Android Preview, O=magic-bunny, C=CN'
+          "$ANDROID_HOME/build-tools/36.0.0/zipalign" -f -p 4 "$unsigned" "$RUNNER_TEMP/aligned.apk"
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" sign \
+            --ks "$RUNNER_TEMP/android-preview.jks" \
+            --ks-key-alias androidpreview \
+            --ks-pass pass:android --key-pass pass:android \
+            --out "$output" "$RUNNER_TEMP/aligned.apk"
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose "$output"
+          sha256sum "$output" > "${output}.sha256"
+          echo "apk=$output" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: music-player-android-arm64
+          path: |
+            ${{ steps.package.outputs.apk }}
+            ${{ steps.package.outputs.apk }}.sha256
+      - name: Publish Android preview release
+        if: startsWith(github.ref, 'refs/tags/android-v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Music Player Android Preview 1
+          prerelease: true
+          generate_release_notes: true
+          body: |
+            First installable Android preview of Music Player.
+
+            - Android 8.0 or newer
+            - ARM64 phones and tablets
+            - Native Tauri audio and network providers
+            - Phone safe-area layout for Car Thing, iPod, and Walkman skins
+
+            This preview uses a CI-generated preview certificate. A later preview may require uninstalling this build before installation. It is not a Play Store production-signed package yet.
+          files: |
+            ${{ steps.package.outputs.apk }}
+            ${{ steps.package.outputs.apk }}.sha256

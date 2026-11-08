@@ -1,5 +1,5 @@
 /target/
-/src-tauri/gen/
+/src-tauri/gen/schemas/
 /artifacts/
 /dist/
 /node_modules/

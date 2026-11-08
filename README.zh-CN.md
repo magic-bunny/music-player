@@ -11,6 +11,7 @@
 <p align="center">
   <a href="https://magic-bunny.github.io/music-player/">在线体验</a> ·
   <a href="https://github.com/magic-bunny/music-player/releases/tag/v1.0.0">下载桌面版 1.0</a> ·
+  <a href="https://github.com/magic-bunny/music-player/releases/tag/android-v1.0.0-preview.1">Android 预览版</a> ·
   <a href="docs/CUSTOM_SKINS.md">自定义皮肤</a>
 </p>
 
@@ -58,6 +59,12 @@ open -a "Music Player"
 系统提示时输入 macOS 管理员密码；终端输入密码期间不会显示字符。同一份已安装的应用只需在首次安装后执行一次；如果重新安装、覆盖应用或升级到另一份未公证的版本，可能需要再次执行。这个命令会让当前这份 Music Player 绕过 Gatekeeper，因此只应对从本项目 GitHub Release 下载的 DMG 使用。后续使用 Developer ID 签名并通过 Apple 公证的版本将不再需要这一步。
 
 维护者发布新版前需要配置 Apple Developer ID 与公证凭据，具体步骤见 [macOS 发布说明](docs/MACOS_RELEASE.md)。CI 在凭据缺失时会停止 macOS 打包，避免继续上传无法通过 Gatekeeper 的 DMG。
+
+## Android 预览版
+
+下载 [Android 1.0 预览版 APK](https://github.com/magic-bunny/music-player/releases/download/android-v1.0.0-preview.1/music-player-1.0.0-android-arm64.apk)。支持 Android 8.0 及以上的 ARM64 手机和平板。请为下载 APK 的浏览器或文件管理器开启“允许安装未知应用”，下载后打开安装包即可安装。
+
+首个 APK 是侧载预览版，还不是 Google Play 的正式签名版本。它使用 CI 生成的预览证书，后续预览版可能需要先卸载旧 APK 再安装。首个 Android 预览版暂不支持导入本地文件夹歌单；网络音乐、电台、收藏、设置、播放、旋转触控和三套皮肤均复用现有应用代码。
 
 ## 使用手册
 
@@ -115,6 +122,13 @@ node scripts/build-pages.mjs
 cargo fmt --check
 cargo test --locked
 cargo clippy --all-targets -- -D warnings
+```
+
+本地构建 ARM64 Android APK 需要 Android SDK 36、NDK 28.2、Java 17 和 `aarch64-linux-android` Rust target：
+
+```sh
+npm ci
+npm run android:build
 ```
 
 目录概览：

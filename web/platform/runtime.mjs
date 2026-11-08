@@ -4,6 +4,8 @@ import { closeBrowserPlayer } from "./browser-exit.mjs";
 
 export async function createRuntime(storage) {
   const native = Boolean(window.__TAURI__);
+  const nativeMobile =
+    native && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   const params = new URLSearchParams(location.search),
     preview = !native && params.get("preview") === "1",
     browserPreview = preview && params.get("browser") === "1";
@@ -18,7 +20,20 @@ export async function createRuntime(storage) {
     invoke = await (
       await import("./native-adapter.mjs")
     ).createNativeAdapter(raw, storage);
-    installBrowserLayout({ native: true });
+    if (nativeMobile) {
+      document.documentElement.classList.add("browser-root", "native-mobile");
+      document.body.classList.add("browser-mode", "native-mobile");
+      const css = document.createElement("link");
+      css.rel = "stylesheet";
+      css.href = new URL("../browser.css", import.meta.url).href;
+      await new Promise((resolve) => {
+        css.onload = css.onerror = resolve;
+        document.head.append(css);
+      });
+      installBrowserLayout();
+    } else {
+      installBrowserLayout({ native: true });
+    }
   } else if (preview && !browserPreview) {
     document.body.classList.add("preview-mode");
     invoke = (await import("../testing/preview.mjs")).invoke;
