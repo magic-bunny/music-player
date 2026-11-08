@@ -48,6 +48,15 @@ GitHub Actions builds the 1.0 packages on macOS, Windows, and Linux and attaches
 
 If the current `v1.0.0` DMG shows “Apple cannot verify Music Player,” attempt to open it once, then open **System Settings → Privacy & Security**, find Music Player in the Security section, and choose **Open Anyway**. Only do this for packages downloaded from this project's GitHub Release.
 
+If **Open Anyway** is unavailable, drag **Music Player.app** into the Applications folder, open Terminal, and remove the quarantine attribute from this app only:
+
+```sh
+sudo xattr -rd com.apple.quarantine "/Applications/Music Player.app"
+open -a "Music Player"
+```
+
+Enter the macOS administrator password when prompted; Terminal does not display password characters while typing. This command bypasses Gatekeeper for this copy of Music Player, so use it only after downloading the DMG from this project's GitHub Release. A future Developer ID-signed and notarized release will not require this step.
+
 Maintainers must configure Apple Developer ID and notarization credentials before publishing another release. See [macOS release signing](docs/MACOS_RELEASE.md). The workflow stops macOS packaging when credentials are absent, preventing another unverified DMG from being uploaded.
 
 ## User guide

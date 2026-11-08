@@ -48,6 +48,15 @@ Music Player 是一个拟物音乐播放器。三套硬件外观共享同一套�
 
 如果当前 `v1.0.0` DMG 出现“Apple 无法验证 Music Player”的提示，首次启动失败后打开“系统设置 → 隐私与安全性”，在安全性区域找到 Music Player 并选择“仍要打开”。这个操作只应对从本项目 GitHub Release 下载的安装包执行。
 
+如果系统设置中没有“仍要打开”，先把 **Music Player.app** 拖入“应用程序”文件夹，再打开“终端”，只移除这个应用的 quarantine 属性：
+
+```sh
+sudo xattr -rd com.apple.quarantine "/Applications/Music Player.app"
+open -a "Music Player"
+```
+
+系统提示时输入 macOS 管理员密码；终端输入密码期间不会显示字符。这个命令会让当前这份 Music Player 绕过 Gatekeeper，因此只应对从本项目 GitHub Release 下载的 DMG 使用。后续使用 Developer ID 签名并通过 Apple 公证的版本将不再需要这一步。
+
 维护者发布新版前需要配置 Apple Developer ID 与公证凭据，具体步骤见 [macOS 发布说明](docs/MACOS_RELEASE.md)。CI 在凭据缺失时会停止 macOS 打包，避免继续上传无法通过 Gatekeeper 的 DMG。
 
 ## 使用手册
