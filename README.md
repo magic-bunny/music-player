@@ -55,7 +55,7 @@ sudo xattr -rd com.apple.quarantine "/Applications/Music Player.app"
 open -a "Music Player"
 ```
 
-Enter the macOS administrator password when prompted; Terminal does not display password characters while typing. This command bypasses Gatekeeper for this copy of Music Player, so use it only after downloading the DMG from this project's GitHub Release. A future Developer ID-signed and notarized release will not require this step.
+Enter the macOS administrator password when prompted; Terminal does not display password characters while typing. You only need to run this command once for the installed copy. Reinstalling, replacing, or upgrading to another unnotarized copy may require running it again. This command bypasses Gatekeeper for this copy of Music Player, so use it only after downloading the DMG from this project's GitHub Release. A future Developer ID-signed and notarized release will not require this step.
 
 Maintainers must configure Apple Developer ID and notarization credentials before publishing another release. See [macOS release signing](docs/MACOS_RELEASE.md). The workflow stops macOS packaging when credentials are absent, preventing another unverified DMG from being uploaded.
 

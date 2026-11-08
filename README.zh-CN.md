@@ -55,7 +55,7 @@ sudo xattr -rd com.apple.quarantine "/Applications/Music Player.app"
 open -a "Music Player"
 ```
 
-系统提示时输入 macOS 管理员密码；终端输入密码期间不会显示字符。这个命令会让当前这份 Music Player 绕过 Gatekeeper，因此只应对从本项目 GitHub Release 下载的 DMG 使用。后续使用 Developer ID 签名并通过 Apple 公证的版本将不再需要这一步。
+系统提示时输入 macOS 管理员密码；终端输入密码期间不会显示字符。同一份已安装的应用只需在首次安装后执行一次；如果重新安装、覆盖应用或升级到另一份未公证的版本，可能需要再次执行。这个命令会让当前这份 Music Player 绕过 Gatekeeper，因此只应对从本项目 GitHub Release 下载的 DMG 使用。后续使用 Developer ID 签名并通过 Apple 公证的版本将不再需要这一步。
 
 维护者发布新版前需要配置 Apple Developer ID 与公证凭据，具体步骤见 [macOS 发布说明](docs/MACOS_RELEASE.md)。CI 在凭据缺失时会停止 macOS 打包，避免继续上传无法通过 Gatekeeper 的 DMG。
 
